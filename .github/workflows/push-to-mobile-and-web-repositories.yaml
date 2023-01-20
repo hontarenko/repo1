@@ -2,12 +2,12 @@ name: Push to repo2
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - master
-      - stage
-    paths-ignore:
-      - .github/**
+  # push:
+  #   branches:
+  #     - master
+  #     - stage
+  #   paths-ignore:
+  #     - .github/**
 
 jobs:
   push:
