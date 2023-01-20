@@ -31,7 +31,7 @@ jobs:
           git config user.name hontarenko &&
           git remote add upstream https://hontarenko:${{ secrets.MERGE }}@github.com/hontarenko/repo1.git &&
           git fetch upstream ${{ github.ref_name }} &&
-          git merge --no-edit --no-ff --no-commit --allow-unrelated-histories --strategy-option theirs upstream/${{ github.ref_name }} &&
+          git merge --no-edit --no-ff --no-commit --allow-unrelated-histories -X theirs upstream/${{ github.ref_name }} &&
           git reset HEAD .github &&
           git checkout -- .github &&
           git commit -m 'merged upstream' &&
