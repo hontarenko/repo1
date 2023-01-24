@@ -13,26 +13,19 @@ jobs:
   push:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        repository:
-          - repo2
-
     steps:
-      - uses: actions/checkout@v3.1.0
-        with:
-          repository: hontarenko/${{ matrix.repository }}
-          token: ${{ secrets.MERGE }}
-          ref: ${{ github.ref_name }}
+      - name: Clone repositories
+        run: |
+          git clone  https://hontarenko:${{ secrets.MERGE }}@github.com/hontarenko/repo2.git &&
+          git clone  https://hontarenko:${{ secrets.MERGE }}@github.com/hontarenko/repo1.git 
 
       - name: Push to ${{ matrix.repository }}
         run: |
+
+          rsync -avzrh --delete --exclude '.git' --exclude '.github' repo2/ repo1/
           git config user.email hontarenko@amomedia.com &&
           git config user.name hontarenko &&
-          git remote add upstream https://hontarenko:${{ secrets.MERGE }}@github.com/hontarenko/repo1.git &&
-          git fetch upstream ${{ github.ref_name }} &&
-          git merge --no-edit --no-ff --no-commit --allow-unrelated-histories -s recursive -X theirs upstream/${{ github.ref_name }} &&
-          git reset HEAD .github &&
-          git checkout -- .github &&
+          cd repo1 &&
+          git add -A &&
           git commit -m 'merged upstream' &&
           git push origin ${{ github.ref_name }}
