@@ -16,16 +16,16 @@ jobs:
     steps:
       - name: Clone repositories
         run: |
-          git clone  https://hontarenko:${{ secrets.MERGE }}@github.com/hontarenko/repo2.git &&
-          git clone  https://hontarenko:${{ secrets.MERGE }}@github.com/hontarenko/repo1.git 
+          git clone  https://hontarenko:${{ secrets.MERGE }}@github.com/hontarenko/repo1.git &&
+          git clone  https://hontarenko:${{ secrets.MERGE }}@github.com/hontarenko/repo2.git 
 
       - name: Push to ${{ matrix.repository }}
         run: |
 
-          rsync -avzrh --delete --exclude '.git' --exclude '.github' repo2/ repo1/
+          rsync -avzrh --delete --exclude '.git' --exclude '.github' repo1/ repo2/
           git config user.email hontarenko@amomedia.com &&
           git config user.name hontarenko &&
-          cd repo1 &&
+          cd repo2 &&
           git add -A &&
           git commit -m 'merged upstream' &&
           git push origin ${{ github.ref_name }}
