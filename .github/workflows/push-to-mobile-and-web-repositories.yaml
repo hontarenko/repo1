@@ -23,9 +23,9 @@ jobs:
         run: |
 
           rsync -avzrh --delete --exclude '.git' --exclude '.github' repo1/ repo2/
-          git config user.email hontarenko@amomedia.com &&
-          git config user.name hontarenko &&
           cd repo2 &&
+          git config user.name hontarenko &&
+          git config user.email hontarenko@amomedia.com &&
           git add -A &&
           git commit -m 'merged upstream' &&
           git push origin ${{ github.ref_name }}
