@@ -22,9 +22,9 @@ jobs:
     steps:
       - name: Clone repositories
         run: |
-          git clone  https://hontarenko:${{ secrets.MERGE }}@github.com/hontarenko/repo1.git &&
-          git clone  https://hontarenko:${{ secrets.MERGE }}@github.com/hontarenko/repo2.git &&
-          git clone  https://hontarenko:${{ secrets.MERGE }}@github.com/hontarenko/repo3.git 
+          git clone --branch ${{ github.ref_name }} https://hontarenko:${{ secrets.MERGE }}@github.com/hontarenko/repo1.git &&
+          git clone --branch ${{ github.ref_name }} https://hontarenko:${{ secrets.MERGE }}@github.com/hontarenko/repo2.git &&
+          git clone --branch ${{ github.ref_name }} https://hontarenko:${{ secrets.MERGE }}@github.com/hontarenko/repo3.git 
 
 
       - name: Push to ${{ matrix.repository }}
