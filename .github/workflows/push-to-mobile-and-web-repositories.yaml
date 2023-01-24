@@ -13,17 +13,25 @@ jobs:
   push:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        repository:
+          - repo2
+          - repo3
+
     steps:
       - name: Clone repositories
         run: |
           git clone  https://hontarenko:${{ secrets.MERGE }}@github.com/hontarenko/repo1.git &&
+          git clone  https://hontarenko:${{ secrets.MERGE }}@github.com/hontarenko/repo2.git &&
           git clone  https://hontarenko:${{ secrets.MERGE }}@github.com/hontarenko/repo2.git 
+
 
       - name: Push to ${{ matrix.repository }}
         run: |
 
-          rsync -avzrh --delete --exclude '.git' --exclude '.github' repo1/ repo2/
-          cd repo2 &&
+          rsync -avzr --delete --exclude '.git' --exclude '.github' repo1/ ${{ matrix.repository }}/
+          cd ${{ matrix.repository }}/ &&
           git config user.name hontarenko &&
           git config user.email hontarenko@amomedia.com &&
           git add -A &&
